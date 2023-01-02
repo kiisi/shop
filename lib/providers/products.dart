@@ -80,7 +80,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future addProducts(Product product) async {
+  Future<void> addProducts(Product product) async {
     const url = 'https://shop-92f07-default-rtdb.firebaseio.com/products.json';
 
     try {
