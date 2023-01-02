@@ -52,11 +52,14 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  Future<void> fetchAllProducts() async {
+  Future<void> fetchAndSetProducts() async {
     const url = 'https://shop-92f07-default-rtdb.firebaseio.com/products.json';
 
     try {
       final response = await http.get(Uri.parse(url));
+      if (json.decode(response.body) == null) {
+        return;
+      }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<Product> loadedProducts = [];

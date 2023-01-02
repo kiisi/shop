@@ -9,19 +9,53 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderData = Provider.of<Orders>(context);
-
+    print("building!");
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: ListView.builder(
-        itemCount: orderData.order.length,
-        itemBuilder: (ctx, i) => OrderProduct(
-          orderData.order[i],
-        ),
+      body: FutureBuilder(
+        future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+        builder: (ctx, dataSnapShot) {
+          if (dataSnapShot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (dataSnapShot.error != null) {
+              return Center(
+                child: Text("An error occurred!"),
+              );
+            } else {
+              return Consumer<Orders>(
+                builder: (context, orderData, child) => ListView.builder(
+                  itemCount: orderData.order.length,
+                  itemBuilder: (ctx, i) => OrderProduct(
+                    orderData.order[i],
+                  ),
+                ),
+              );
+            }
+          }
+        },
       ),
     );
   }
 }
+
+// use it in stateful widget
+ // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   // Provider.of<Orders>(context, listen: false).fetchAndSetOrders(); Works fine
+  //   // But does not work fine with listen: true
+  //   super.initState();
+  //   Future.delayed(Duration.zero).then((_) async {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   });
+  // }
