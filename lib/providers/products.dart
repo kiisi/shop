@@ -51,20 +51,20 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  Future addProducts(Product product) {
+  Future addProducts(Product product) async {
     const url = 'https://shop-92f07-default-rtdb.firebaseio.com/products.json';
 
-    return http
-        .post(Uri.parse(url),
-            body: json.encode({
-              'title': product.title,
-              'description': product.description,
-              'price': product.price,
-              'imageUrl': product.imageUrl,
-              'isFavorite': product.isFavorite,
-              'id': DateTime.now().toString(),
-            }))
-        .then((response) {
+    try {
+      final response = await http.post(Uri.parse(url),
+          body: json.encode({
+            'title': product.title,
+            'description': product.description,
+            'price': product.price,
+            'imageUrl': product.imageUrl,
+            'isFavorite': product.isFavorite,
+            'id': DateTime.now().toString(),
+          }));
+
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -76,10 +76,10 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
 
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
