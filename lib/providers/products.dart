@@ -40,6 +40,10 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  final String authToken;
+
+  Products(this.authToken);
+
   Product findById(String id) {
     return _items.firstWhere((product) => product.id == id);
   }
@@ -53,7 +57,8 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://shop-92f07-default-rtdb.firebaseio.com/products.json';
+    final url =
+        'https://shop-92f07-default-rtdb.firebaseio.com/products.json?auth=$authToken';
 
     try {
       final response = await http.get(Uri.parse(url));
