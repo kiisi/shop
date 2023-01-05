@@ -73,7 +73,6 @@ class Products with ChangeNotifier {
       if (json.decode(response.body) == null) {
         return;
       }
-      print(response.body);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       url =
