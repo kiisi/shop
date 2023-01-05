@@ -21,6 +21,10 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  dynamic get userId {
+    return _userId;
+  }
+
   Future<void> _authenticate(
       String email, String password, String segment) async {
     const api_key = "AIzaSyCv_JTaojTVK75MJpOgxnHY0GpVmUPLCqI";
