@@ -255,19 +255,31 @@ class _AuthCardState extends State<AuthCard>
                     _authData['password'] = '$value';
                   },
                 ),
-                FadeTransition(
-                  opacity: _opacityAnimation,
-                  child: TextFormField(
-                    enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                    validator: _authMode == AuthMode.Signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                          }
-                        : null,
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                  constraints: BoxConstraints(
+                    maxHeight: _authMode == AuthMode.Signup ? 120 : 0,
+                    minHeight: _authMode == AuthMode.Signup ? 60 : 0,
+                  ),
+                  child: FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: SlideTransition(
+                      position: _slideAnimation,
+                      child: TextFormField(
+                        enabled: _authMode == AuthMode.Signup,
+                        decoration:
+                            InputDecoration(labelText: 'Confirm Password'),
+                        obscureText: true,
+                        validator: _authMode == AuthMode.Signup
+                            ? (value) {
+                                if (value != _passwordController.text) {
+                                  return 'Passwords do not match!';
+                                }
+                              }
+                            : null,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
