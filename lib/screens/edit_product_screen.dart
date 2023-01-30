@@ -232,8 +232,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   child: Text("Enter a URL"),
                                 )
                               : FittedBox(
-                                  child: Image.network(_imageUrlController.text,
-                                      fit: BoxFit.cover),
+                                  child: Image.network(
+                                    _imageUrlController.text,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, exception, stackTrace) =>
+                                            Text(
+                                      "Invalid Url",
+                                    ),
+                                  ),
                                 ),
                         ),
                         Expanded(

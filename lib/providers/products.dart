@@ -40,15 +40,10 @@ class Products with ChangeNotifier {
     // ),
   ];
 
-  final String authToken;
-  final String userId;
+  final String? authToken;
+  final String? userId;
 
   Products(this.authToken, this.userId);
-
-  void update(List<Product> productItems) {
-    _items = productItems;
-    notifyListeners();
-  }
 
   Product findById(String id) {
     return _items.firstWhere((product) => product.id == id);

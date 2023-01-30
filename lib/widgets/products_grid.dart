@@ -13,6 +13,15 @@ class ProductsGrid extends StatelessWidget {
     final productsData = Provider.of<Products>(context);
     final products = showFavs ? productsData.favoriteItems : productsData.items;
 
+    if (products.length == 0) {
+      return Center(
+        child: Text(
+          'No products available!',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+    }
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

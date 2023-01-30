@@ -40,17 +40,25 @@ class UserProductScreen extends StatelessWidget {
                     child: Consumer<Products>(
                       builder: (context, productsData, _) => Padding(
                         padding: EdgeInsets.all(5.0),
-                        child: ListView.builder(
-                            itemBuilder: (_, i) => Column(
-                                  children: [
-                                    UserProduct(
-                                        productsData.items[i].id,
-                                        productsData.items[i].title,
-                                        productsData.items[i].imageUrl),
-                                    Divider(),
-                                  ],
+                        child: productsData.items.length == 0
+                            ? Center(
+                                child: Text(
+                                  'Start adding your products',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                            itemCount: productsData.items.length),
+                              )
+                            : ListView.builder(
+                                itemBuilder: (_, i) => Column(
+                                      children: [
+                                        UserProduct(
+                                            productsData.items[i].id,
+                                            productsData.items[i].title,
+                                            productsData.items[i].imageUrl),
+                                        Divider(),
+                                      ],
+                                    ),
+                                itemCount: productsData.items.length),
                       ),
                     ),
                   ),

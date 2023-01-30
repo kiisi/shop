@@ -23,15 +23,10 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
-  final String authToken;
-  final String userId;
+  final String? authToken;
+  final String? userId;
 
   Orders(this.authToken, this.userId);
-
-  void update(List<OrderItem> orderItems) {
-    _orders = orderItems;
-    notifyListeners();
-  }
 
   Future<void> fetchAndSetOrders() async {
     final url =
