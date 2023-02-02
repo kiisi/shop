@@ -40,7 +40,6 @@ dependencies:
   intl: ^0.18.0
   http: ^0.13.5
   shared_preferences: ^2.0.15
-  flutter_cache_manager: ^3.3.0
 
 
 dev_dependencies:
